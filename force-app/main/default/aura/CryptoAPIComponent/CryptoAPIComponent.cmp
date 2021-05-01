@@ -1,0 +1,57 @@
+<aura:component controller="CoinAPIController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="currentUserName" type="String"/>
+    <aura:attribute name="currencyList" type="List"/>
+    <aura:attribute name="cryptoList" type="List"/>
+    <aura:attribute name="currentRate" type="String"/>
+    <aura:attribute name="selectedCrypto" type="String"/>
+    <aura:attribute name="selectedCurrency" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <div class="slds-card">
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <span class="slds-icon_container slds-icon-standard-account" title="account">
+                        <lightning:icon iconName="custom:custom11" alternativeText="Coin" title="Coin" />
+                    </span>
+                </div>
+                <div class="slds-media__body">
+                    <h2 class="slds-card__header-title">
+                        <a href="#" class="slds-card__header-link slds-truncate" title="Opportunity">
+                            <span>Hi</span>
+                        </a>
+                    </h2>
+                </div>
+            </header>
+        </div>
+        <div class="slds-card__body slds-card__body_inner">
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col">
+                    <lightning:select name="Crypto" label="Crypto" required="true" value="{!v.selectedCrypto}">
+                        <option value="" text="- None -" /> 
+                        <aura:iteration items="{!v.cryptoList}" var="cryptoval">
+                            <option value="{!cryptoval.assetName}" text="{!cryptoval.assetId}" />  
+                        </aura:iteration>
+                    </lightning:select>
+                </div>
+                <div class="slds-col">
+                    <lightning:select name="Currency" label="Currency" required="true" value="{!v.selectedCurrency}">
+                        <option value="" text="- None -" /> 
+                        <aura:iteration items="{!v.currencyList}" var="currencyval">
+                            <option value="{!currencyval.assetName}" text="{!currencyval.assetId}" />  
+                        </aura:iteration>
+                    </lightning:select>
+                </div>
+                <div class="slds-col">
+                    <lightning:input type="number" name="Current Exchnage Rate" label="Current Exchnage Rate" value="{!v.currentRate}" formatter="currency" step="0.01" disabled="true"/>
+                </div>
+                <div class="slds-col" style="margin-top: 23px !important;">
+                    <lightning:button variant="brand" label="Get Exchange Rate" title="Get Exchange Rate" onclick="{!c.getCurrentRate}"/>
+                    <lightning:button variant="brand-outline" label="Moniter Coin" title="Moniter Coin" onclick="{!c.moniterCoin}"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>
